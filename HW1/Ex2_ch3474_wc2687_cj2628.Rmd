@@ -15,7 +15,8 @@ library("dplyr")
 #### Question 1.
 Based on the equation: $(E(X))^2+D(X)=E(X^2)$. We can get the Method of Moments estimator for $\lambda$: $$\hat{\lambda_M}^2+\hat{\lambda_M}=E(X^2)=\mu_2=\frac{1}{n}\sum_{i=1}^{n}X_i^2$$
 After simplification,
-$$(\hat{\lambda_M}+\frac{1}{2})^2=\frac{1}{n}\sum_{i=1}^{n}X_i^2+\frac{1}{4} \\ \hat{\lambda_M}=\frac{-1+\sqrt{1+\frac{4}{n}\sum_{i=1}^{n}X_i^2}}{2}$$
+$$(\hat{\lambda_M}+\frac{1}{2})^2=\frac{1}{n}\sum_{i=1}^{n}X_i^2+\frac{1}{4}$$
+$$\hat{\lambda_M}=\frac{-1+\sqrt{1+\frac{4}{n}\sum_{i=1}^{n}X_i^2}}{2}$$
 
 #### Question 2.
 Let $g(t)=\frac{-1+\sqrt{1+4t}}{2}$, so $g(\bar{X_n^2})=\lambda$
