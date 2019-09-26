@@ -47,7 +47,7 @@ So, the $approximate\ (1-\alpha)$-confidence interval for $Q_D(p)$ is $[-\bar{D_
 
 #### Question 4.
 We know that if $D_1,...,D_n$ are independent exponential random variables with parameter $\lambda$, then
-$$\lambda\bar{D_n}\sim \Gamma(n,\frac{1}{n})$$
+$$\lambda\bar{D_n}\sim \Gamma(n,n)$$
 So, $\lambda\bar{D_n}$ is independent of the parameter $\lambda$, which means it is an exact pivot. 
 To construct an exact confidence interval of the median, we can first transform $\lambda\bar{D_n}$ to $\chi^2$ distribution. Then,
 $$2n\lambda\bar{D_n}\sim \chi^2_{2n}$$
