@@ -1,5 +1,6 @@
 ---
-title: "HW1"
+author: Huang Chao, Wancheng Chen, Chengchao Jin
+title: "STAT5703 HW1"
 output: pdf_document
 ---
 
@@ -8,9 +9,58 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.width=4.5, fig.height=3)
 library("dplyr")
 ```
-## Exercise 3
+## Exercise 1.
+#### Question 1.
+To calculate $p^{th}$, we need to find $Q_D(p)$ such that $P(D\leq Q_D(p))=p$. Then, the previous function can be transformed to
 
-### Q1
+$$\int_{0}^{Q_D(p)}\lambda e^{-\lambda D}dD=1-e^{-\lambda Q_D(p)}=p$$
+
+So, from this equation, $Q_D(p)$ can be expressed by
+
+$$Q_D(p)=-\frac{1}{\lambda}\ln{(1-p)}$$
+
+#### Question 2.
+From question(a), we already obtain the equation for $Q_D(p)$ which is $Q_D(p)=-\frac{1}{\lambda}\ln{(1-p)}$. Then, to find the MLE of $Q_D(p)$, we can find the MLE of $\lambda$ first and then replace $\lambda$ with its Maximum Likelihood Estimator $\hat\lambda^{MLE}$. $D_1,...,D_n$ are i.i.d. Exponential random variables with parameter $\lambda$, the log-likelihood function is
+
+$$\ell (\lambda ;D_1,...,D_n)=n\ln{\lambda}-\sum_{i=1}^n\lambda D_i$$
+The MLE $\hat\lambda^{MLE}$ is 
+
+$$\hat\lambda^{MLE}=\frac{1}{\bar{D_n}}$$
+
+and
+
+$$Q_D(p)^{MLE}=-\frac{1}{\hat\lambda^{MLE}}\ln{(1-p)}=-\bar{D_n}\ln{(1-p)}$$
+
+#### Question 3.
+$D_1,...,D_n\overset{i.i.d.}{\sim}Exp(\lambda)$. Then the CLT tells us that
+$$\sqrt{n}(\bar{D_n}-\mu)\xrightarrow[n\rightarrow \infty]{\mathcal{D}}\mathcal{N}(0,\sigma^2)$$
+Hence, by Delta Method we can get,
+$$\sqrt{n}(Q_D(p)+\frac{\ln{(1-p)}}{\lambda})\xrightarrow[n\rightarrow \infty]{\mathcal{D}}\mathcal{N}(0,\frac{(\ln{(1-p)})^2}{\lambda^2})$$
+Then, for $approximate\ (1-\alpha)$-confidence interval,
+
+$$L(D)=-\bar{D_n}\ln{(1-p)}-\frac{z_{1-\alpha/2}\times\ln{(1-p)}}{\lambda\sqrt{n}}$$
+
+$$R(D)=-\bar{D_n}\ln{(1-p)}+\frac{z_{1-\alpha/2}\times\ln{(1-p)}}{\lambda\sqrt{n}}$$
+So, the $approximate\ (1-\alpha)$-confidence interval for $Q_D(p)$ is $[-\bar{D_n}\ln{(1-p)}-\frac{z_{1-\alpha/2}\times\ln{(1-p)}}{\lambda\sqrt{n}},-\bar{D_n}\ln{(1-p)}+\frac{z_{1-\alpha/2}\times\ln{(1-p)}}{\lambda\sqrt{n}}]$
+
+#### Question 4.
+We know that if $D_1,...,D_n$ are independent exponential random variables with parameter $\lambda$, then
+$$\lambda\bar{D_n}\sim \Gamma(n,\frac{1}{n})$$
+So, $\lambda\bar{D_n}$ is independent of the parameter $\lambda$, which means it is an exact pivot. 
+To construct an exact confidence interval of the median, we can first transform $\lambda\bar{D_n}$ to $\chi^2$ distribution. Then,
+$$2n\lambda\bar{D_n}\sim \chi^2_{2n}$$
+Hence, for any $\alpha\in(0,1)$,
+$$P(\chi^2_{1-\alpha/2,2n}<2n\lambda\bar{D_n}<\chi^2_{\alpha/2,2n})=1-\alpha$$
+Since $Q_D(0.5)=-\bar{D_n}\ln{0.5}$, then
+
+$$P(-\frac{\ln{0.5}\chi^2_{\alpha/2,2n}}{2n\lambda}<Q_D(0.5)<-\frac{\ln{0.5}\chi^2_{1-\alpha/2,2n}}{2n\lambda})=1-\alpha$$
+
+Hence, the $(1-\alpha)$ exact confidence interval of the median is,
+$$Q_D(0.5)\in[-\frac{\ln{0.5}\chi^2_{\alpha/2,2n}}{2n\lambda},-\frac{\ln{0.5}\chi^2_{1-\alpha/2,2n}}{2n\lambda}]$$
+
+## Exercise 3.
+
+#### Question 1.
 As $R_1-\mu$ has a zero mean distribution, all moments with odd orders are zero. Therefore, we have,
 $$\begin{aligned}
    \gamma &= \mathbf{E}[R_1^3] = E[(R_1 - \mu + \mu)^3]\\
@@ -20,7 +70,7 @@ $$\begin{aligned}
  &= \mu^3 + 3\mu\sigma^2
  \end{aligned}$$
 
-### Q2
+#### Question 2.
 (a) Since $\bar{R}=\frac{1}{n}\sum \limits_{i=1}^{n}R_i$ has the distribution of $\mathbf{N}(\mu,\sigma^2/n)$, similarly to Q1, we can derive $\mathbf{E}[\bar{R}^3]=\mu^3 + 3\mu\frac{\sigma^2}{n}$. So the bias is $\mathbf{E}[\hat{\gamma} - \gamma]=-\frac{n-1}{n}\mu\sigma^3$.
 (b) $\hat{\gamma}$ is not consistent. Since $\bar{R} \sim N(\mu, \frac{\sigma^2}{n})$, we have, 
 $$\begin{aligned}
@@ -35,14 +85,14 @@ $$\begin{aligned}
  
 So $\hat{\gamma}$ converges to $\mu^3 + 3\mu\frac{\sigma^2}{n} \to \mu^3$, so it is not consistent to the estimated parameter $\gamma=\mu^3+3\mu\sigma^3$.
 
-### Q3
+#### Question 3.
 Since we have $\mathbf{E}[R_1R_2R_3]=\mu^3$ and $\mathbf{E}[\hat{\gamma}]=\mu^3 + \frac{3\mu\sigma^2}{n}$, we have $3\mu\sigma^2 / n=\mathbf{E}[\hat{\gamma}] - \mathbf{E}[R_1R_2R_3]$.Therefore, we can choose $n\hat{\gamma} - (n-1)R_1R_2R_3$ as the unbias estimator, whose mean is exactly $\mu^3$.
 
-### Q4
+#### Question 4.
 (a) Since $\mathbf{E[\tilde{\gamma}-\gamma]} = n*\frac{1}{n}\mathbf{E}[R_1^3]-\gamma =0$, the bias is 0.
 (b) $\tilde{\gamma}$ is consistent. Using LLT, $\tilde{\gamma} \overset{p}{\sim} \mathbf{E}[R_1^3] = \gamma$. So it's consistent.
 
-### Q5
+#### Question 5.
 Since the minimal sufficient statistics for normal distributions are $\bar{R}=\frac{1}{n} \sum \limits _{i=1}^{n} R_i$ and $\overline{R^2}=\frac{1}{n} \sum \limits _{i=1}^{n} R_i^2$. And they are also complete statistics. According to the Rao-Blackwell, we only need to find the conditional expection of an unbiased estimator by setting the two statistics as the condition. Therefore ${\gamma}_{UVME} = \mathbf{E}[\tilde{\gamma} |\bar{R}, \overline{R^2}]$. In the following, we use $T$ to denote the condition. We have,
 $$
 \begin{aligned}
@@ -64,7 +114,7 @@ $$
  \end{aligned}
 $$
 
-## Exercise 4
+## Exercise 4.
 
 ### Load dataset
 
@@ -86,7 +136,7 @@ colnames(df) <- c("id", "age", "tot")
 rownames(df) <- df$id
 ```
 
-### Q1
+#### Question 1.
 
 ```{r}
 library(ggplot2)
@@ -96,34 +146,35 @@ scatterPlot
 
 The scatter plot shows that "age" and "tot" have a negative relationship and it could be fitted with a linear model.
 
-### Q2
-I would choose tot as the response.
+#### Question 2.
+I would like to use tot as the response variable because it is more intuitively reasonable to say that the tot function is affected by age. 
 
-### Q3 
+#### Question 3. 
 ```{r}
 Corr = cor(df$age, df$tot)
 Corr
 ```
-Negative sign, since the correlation is false.
+Negative sign, since the correlation is negative.
+Without any calculation, I also expect the intercept to be positive and the slope to be negative. First, as age variable increases, the overall function of kidney, tot, tends to be lower and therefore the slope should be negative. Then, around age=20, the values of tot scatter around tot=0. So clearly, since the slope is negative, the value of tot should be larger than 0 at age=0. Intuitively, the overall function of kidney for a baby should be positive. So the intercept should be positive.
 
-### Q4
+#### Question 4.
 
 $\alpha$ denotes the expected value when the input is 0, while $\beta$ denotes how much the response will change if the input is increased or decreased by 1.
 
-### Q5
+#### Question 5.
 
 ```{r}
 linearModel <- lm(tot ~ age, data = df)
 summary(linearModel)
 ```
 
-They are statistically significant with a very small p-value.
+From the model, we can see that $\alpha$=2.860027 and $\beta$=-0.078588. So, when age=0, the tot is estimated to be 2.860027. Also, for each year increase of age, the tot is estimated to decrease by 0.078588. Both parameters have p-value much smaller than 0.05 so they are both statistically significant.
 
-### Q6
+#### Question 6.
 
 I would use the geometry to intepret these two parameters. In linear algebra, the estimates provide the optimal group of parameters to project a high-dimension vector to a two-dimension plane with minimal loss.
 
-### Q7
+#### Question 7.
 
 ```{r}
 #prediction <- function(age) linearModel$coefficients * age + linearModel$
@@ -137,7 +188,7 @@ predict(100)
 ```
 The prediction seems reasonable.
 
-### Q8
+#### Question 8.
 
 ```{r}
 res_df <- df %>% 
@@ -149,9 +200,9 @@ res_df <- df %>%
 ggplot(res_df) + geom_point(aes(x=age, y=residual))
 ```
 
-The plot shows that the residuals are randomly distributed around 0, so it's reasonable to have the i.i.d assumption.
+The plot shows that the residuals are randomly distributed around 0, so it seems reasonable to assume that errors $\epsilon_i$ are i.i.d..
 
-### Q9
+#### Question 9.
 ```{r}
 minus <- function(x, y) max(y,x) - min(y,x)
 betaIntNormal <- Reduce(minus, confint(linearModel)[2,])
@@ -159,7 +210,7 @@ betaIntAsym <- Reduce(minus, confint.default(linearModel)[2, ])
 ```
 The asymptotic one seems to have a shorter interval.
 
-### Q10
+#### Question 10.
 
 ```{r}
 boot.stat <- function(data, indices){
@@ -192,7 +243,7 @@ percentInt <- Reduce(minus, confInts$percent[4:5])
 ```
 The bootstrap interval is larger.
 
-### Q11
+#### Question 11.
 ```{r}
 LeaveOneOutCorr <- function (idx)  {
   df_tmp <- df %>% dplyr::filter(id != idx)
@@ -224,16 +275,16 @@ ggplot(df_outlier) + geom_point(aes(x=age, y=tot, color=outlier))
 
 There are some data points which are more influential than others. In the above plot, they are marked as "outlier"s with special leave-one-out differences. 
 
-## Bonus Question
+## Bonus Question.
 
-### Q1
+#### Question 1.
 The author want to answer the question whether techno-scientific findings are inevitable or not by fitting the findings dataset using a Poisson model. The optimal parameter chosen after experiments tends to show that techno-scientific discoveries are not inevitable and highly depends on luck.
 I think for me, the choice of Poisson distribution seems reasonable, since techno-scientific findings are odd and can happen at a low probability. And Poisson distribution is quite suitable for modeling the probability of rare events happening.
 
-### Q2
+#### Question 2.
 Since there are no data for singleton and no-findings in the dataset, so using a truncated model will not give weird expected values for $k=0$ or $k=1$. 
 
-### Q3
+#### Question 3.
 Suppose $X \sim Poisson(\mu)$, then we can derive the expectation and variance of $Y$ using $\mathbf{E}[X]$ and $Var[X]$. We have,
 $$
 \begin{aligned}
@@ -253,7 +304,7 @@ Similarly, we can derive $Var[Y]$ with the help of $\mathbf{E}[X]$ and $\mathbf{
 $$
 Var[Y]= C\mu(2\mu-e^{-\mu}) - C^2\mu^2(1-e^{-\mu})^2
 $$
-### Q4
+#### Question 4.
 The data can be saved as a dataframe as below,
 ```{r}
 tbl1 <- data.frame(
@@ -295,14 +346,14 @@ plot_curve <- function(pars, f) {
 plot_curve(10^seq.int(-2, 1, 0.01), logL)
 ```
 
-### Q5
+#### Question 5.
 The algorithm I choose is "BFGS", implemented in "optimx:optimx" function. Since it's a convex and nonlinear optimization problem as plotted above, this algorithm will converge shortly. The results and code are shown below,
 ```{r}
 opt <- optim(as.vector(c(1)), method = "BFGS", fn=function(x) {-logL(x)}, gr = NULL)
 opt$par
 ```
 
-### Q6
+#### Question 6.
 Since the given distribution follows the regularity conditions, the asymptotic dsitribution would be a normal distribution,
 $$
 \sqrt{n}(\hat{\mu}^{MLE} - \mu_0) \to N(0, I(\mu_0)^{-1})
@@ -323,7 +374,7 @@ Also, from the curve below, we can notice that the curve of fisher information a
 plot_curve(10^seq.int(-2, 0.5, 0.01), fisher)
 ```
 
-### Q7
+####  Question 7.
 Given the asymptotic distribution given by Q6, we have the confidence interval as,
 $$
 \begin{aligned}
@@ -331,9 +382,9 @@ $$
 \end{aligned}
 $$
 
-### Q8
+#### Question 8.
 
 It seems like a reasonable choice since different groups of majors have quite different value of $\mu$ as mentioned in the paper. But it would be hard to evaluate the mathematical properties of this estimator.
 
-### Q9
+#### Question 9.
 Our ML estimator is `r opt$par`, which is quite similar to the result ($\mu=1.4$) given by the paper. Both of them can show evidence that the techno-scientific findings are not inevitable.
