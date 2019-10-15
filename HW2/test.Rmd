@@ -1,0 +1,52 @@
+---
+title: "Graded Homework 2 for 5703 (helper functions and code)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+ # keep this chunk in your .Rmd file
+ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+## Exercise 1
+
+```{r}
+# change txt file to data.frame
+library(dplyr)
+
+data <- read.csv("cancer.txt") %>%
+  tidyr::separate(col = 1,
+                  into = c("No.", "day", "month", "year", "t", "d", "arm"),
+                  sep = " ") %>% dplyr::select(t:arm)
+  
+data$t <- as.numeric(data$t)
+data$d <- as.factor(data$d)
+data$arm <- as.factor(data$arm)
+
+write.csv(data, "cancer.csv", row.names = F)
+```
+
+```{r}
+data_clean <- read.csv("cancer.csv")
+data_clean
+```
+
+```{r}
+library(ggplot2)
+right_censoring <- data_clean %>% 
+  filter(d == 1) %>% 
+  select(t)
+
+ggplot(right_censoring) + geom_histogram(mapping = aes(t))
+```
+
+```{r}
+library(survival)
+KM0 <- survfit(Surv(t, d) ~ arm,  type="kaplan-meier", conf.type="log", data=data_clean)
+```
+
+```{r}
+plot(KM0, xlab="t", ylab="Survival", lwd=2, col=1:3)
+legend(x="topright", col=1:3, lwd=2, legend=)
+```
+
