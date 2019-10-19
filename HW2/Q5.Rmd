@@ -1,0 +1,102 @@
+---
+title: "Graded Homework 2 for 5703 (Solutions)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+ # keep this chunk in your .Rmd file
+ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+# Problem 5
+
+## Q1
+
+```{r}
+# manually export the data from xls file to a csv file
+milk <- read.csv("./milk.csv", sep = "\t", header = F, 
+                 col.names = c("Month", "Production"), 
+                 as.is = F)
+```
+
+```{r}
+library(lubridate)
+milk <- milk %>% 
+  mutate(Month_OBJ=ymd(Month, truncated = 1)) %>% 
+  mutate(Idx=row_number())
+
+library(ggplot2)
+
+milk %>% ggplot(aes(x=Month_OBJ, y=Production)) + 
+  geom_line() + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+```{r}
+# fit a linear model
+lm_trend <- lm(Production ~ Idx, milk)
+lm_trend
+```
+
+```{r}
+library(ggfortify)
+autoplot(lm_trend)
+```
+
+Here the regression model is fitted using the index of each month instead of the timestamp. It can be interpreted as the production of first month is around 611 pounds per cow, and later on , for each month, there will be an increase of 1.693 pound of the production per cow, which indicates a trend component.
+
+The residual plots show that the residuals seem to scatter randomly with a mean value of 0 and a similar variance with different expected value. So it's possible to view the residuals as a stationary time series.
+
+## Q2
+
+```{r, fig.height=8}
+residuals <- milk %>% 
+  mutate(res=lm_trend$residuals) %>% 
+  select(res) %>% 
+  as.ts()
+
+acf(residuals)
+```
+
+From the ACF plot, we can see that there is a strong seasonal component with the period of 12 months in this dataset.
+
+```{r}
+forecast::ggPacf(residuals)
+```
+
+From PACF model, we can see that there seem to be a AR(1) or AR(2) model since PACF cuts off quickly after the first several bars if we ignore the seasonal effct.
+
+## Q3
+
+```{r}
+fitAR1 <- arima(residuals, 
+                  order=c(1,0,0),
+                  seasonal = list(order = c(1,0,0), period = 12))
+forecast::checkresiduals(fitAR1)
+fitAR1
+```
+
+```{r}
+fitAR2 <- arima(residuals, 
+                  order=c(2,0,0),
+                  seasonal = list(order = c(1,0,0), period = 12))
+forecast::checkresiduals(fitAR2)
+fitAR2
+```
+
+AR(1) and AR(2) doesn't seem to have a huge difference, the ACF now seems to have no apparent patterns. AR(2) has a slightly higher aic compared with AR(1).
+
+## Q4
+
+```{r}
+forecast::auto.arima(residuals)
+```
+
+The auto chosen model has the highest AIC of 1691.
+
+```{r}
+arima(x = residuals,
+      order=c(1,2,1),
+      seasonal = list(order = c(1,0,0), period = 12))
+```
+
