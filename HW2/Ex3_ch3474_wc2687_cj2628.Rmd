@@ -1,6 +1,7 @@
 ---
-title: "Graded Homework 2 for 5703 (Solutions)"
-output: html_document
+title: "STAT5703 HW2 Ex3"
+author: "Chao Huang (ch3474), Wancheng Chen (wc2687), Chengchao Jin (cj2628)"
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -8,7 +9,7 @@ output: html_document
  knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
 
-# Problem 3
+# Exercise 3
 
 ## Q1
 
