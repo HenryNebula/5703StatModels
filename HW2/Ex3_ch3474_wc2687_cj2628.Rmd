@@ -2,6 +2,7 @@
 title: "STAT5703 HW2 Ex3"
 author: "Chao Huang (ch3474), Wancheng Chen (wc2687), Chengchao Jin (cj2628)"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -31,9 +32,7 @@ The long term probability is the stationary distribution of the Markov chain. So
 
 Since the these two conditional distributions are binomial distributions, we can denote their success rate as $p_1$ and $p_2$ respectively. Here success means the random variable in front of the condition takes the value of 1. Then We can formulate the null hypothesis $H_0$ as, these two distributions are not significantly different, i.e., $p_1=p_2$. So by using the approximation of normal distribution, we can use a z-statistic to test this hypothesis. Under $H_0$, the test statistic will have the distribution as,
 $$
-\begin{equation}
 z=\frac{|\hat{p}_{1}-\hat{p}_{2}| - 0}{\sqrt{\hat{p}(1-\hat{p})\left(1 / n_{1}+1 / n_{2}\right)}} \sim N(0,1)
-\end{equation}
 $$
 where $\hat{p}=\frac{n_{1} \hat{p}_{1}+n_{2} \hat{p}_{2}}{n_{1}+n_{2}}=\frac{x_{1}+x_{2}}{n_{1}+n_{2}}$. Given that number of snowy days is 1000 and total sample size is 1373, we have,
 $$

@@ -31,13 +31,11 @@ $$
 By letting the first derivative to be 0, we have, 
 
 $$
-\begin{equation}
 \begin{aligned}
 \frac{d L_{\theta}}{d \theta} &=\sum_{x} N_{x} \cdot \frac{1}{p_{x}} \cdot \frac{d p_{x}}{d \theta} \\
 &=N_{A} \cdot \frac{-1}{1-\theta} + N_{C} \cdot \frac{1-2 \theta}{\theta-\theta^{2}}+ N_{G} \cdot \frac{2 \theta-3 \theta^{2}}{\theta^{2}-\theta^{3}} + N_{T} \cdot \frac{\cdot 3 \theta^{2}}{\theta^{3}} \\
 &=0
 \end{aligned}
-\end{equation}
 $$
 
 Simplying the equation, we get,
@@ -58,12 +56,10 @@ $$
 Since for a specific base $x$, its marginal distribution is a binomial distribution with $p=p_x$ (since we can view all the other bases as a large group and regard one occurance of base $x$ as a success). So using $E[N_x]=n\cdot p_x$, we can simplify the above formula as,
 
 $$
-\begin{equation}
 \begin{aligned}
 I(\theta) &= n \sum_{x \in {A,C,G,T}} \left(\frac{1}{p_{x}} \cdot\left(\frac{d p_{x}}{d \theta}\right)^{2} - \frac{d^{2} p_{x}}{d \theta^{2}}\right) \\
 &=n \cdot \frac{1+\theta + \theta^2}{\theta (1-\theta)}
 \end{aligned}
-\end{equation}
 $$
 
 Therefore, the asymptotic distribution is $N(\theta, \frac{\theta (1-\theta)}{n(1+\theta + \theta^2)})$.

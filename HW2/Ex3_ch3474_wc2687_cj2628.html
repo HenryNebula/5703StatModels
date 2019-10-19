@@ -1656,9 +1656,7 @@ summary {
 <div id="q4" class="section level2">
 <h2>Q4</h2>
 <p>Since the these two conditional distributions are binomial distributions, we can denote their success rate as <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_2\)</span> respectively. Here success means the random variable in front of the condition takes the value of 1. Then We can formulate the null hypothesis <span class="math inline">\(H_0\)</span> as, these two distributions are not significantly different, i.e., <span class="math inline">\(p_1=p_2\)</span>. So by using the approximation of normal distribution, we can use a z-statistic to test this hypothesis. Under <span class="math inline">\(H_0\)</span>, the test statistic will have the distribution as, <span class="math display">\[
-\begin{equation}
 z=\frac{|\hat{p}_{1}-\hat{p}_{2}| - 0}{\sqrt{\hat{p}(1-\hat{p})\left(1 / n_{1}+1 / n_{2}\right)}} \sim N(0,1)
-\end{equation}
 \]</span> where <span class="math inline">\(\hat{p}=\frac{n_{1} \hat{p}_{1}+n_{2} \hat{p}_{2}}{n_{1}+n_{2}}=\frac{x_{1}+x_{2}}{n_{1}+n_{2}}\)</span>. Given that number of snowy days is 1000 and total sample size is 1373, we have, <span class="math display">\[
 p=\frac{1000*0.955+373*0.966}{1373}=0.9580
 \]</span> Then the exact value for z-statistic will be, <span class="math display">\[
