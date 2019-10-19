@@ -1,7 +1,10 @@
 ---
 title: "STAT5703 HW2 Ex4"
 author: "Chao Huang (ch3474), Wancheng Chen (wc2687), Chengchao Jin (cj2628)"
-output: pdf_document
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -33,11 +36,12 @@ $$
 \frac{d L_{\theta}}{d \theta} &=\sum_{x} N_{x} \cdot \frac{1}{p_{x}} \cdot \frac{d p_{x}}{d \theta} \\
 &=N_{A} \cdot \frac{-1}{1-\theta} + N_{C} \cdot \frac{1-2 \theta}{\theta-\theta^{2}}+ N_{G} \cdot \frac{2 \theta-3 \theta^{2}}{\theta^{2}-\theta^{3}} + N_{T} \cdot \frac{\cdot 3 \theta^{2}}{\theta^{3}} \\
 &=0
-
 \end{aligned}
 \end{equation}
 $$
+
 Simplying the equation, we get,
+
 $$
 -N_{A} \cdot \theta +N_{c}(1-2\theta) +N_G(2-3 \theta)+3 N_{T}(1-\theta)=0 \\
 \theta\left(N_{A}+2 N_{C} + N_G+ 3 N_{T}\right)=N_{C}+2 N_{G}+3 N_{T}
@@ -120,9 +124,9 @@ Compare with those two unbiased estimator, this estimator is also unbiased but w
 ## Q7
 
 We can use the likelihood ratio test to test the hypothesis,
+
 $$
 W = 2 \sum \limits_{i=1} ^{4} N_i\log \frac{p_i}{p_i(\theta)}=2 \sum \limits_{i=1} ^{4} N_i\log \frac{N_i}{n\cdot p_i(\theta)} \sim \chi_{3-1}^{2}=\chi_2^2
-
 $$
 
 The degree of freedom of the chi-square distribution is 2 since the difference of the number of free parameters in these two models is 2.

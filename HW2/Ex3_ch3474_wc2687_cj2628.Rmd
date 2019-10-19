@@ -1,7 +1,9 @@
 ---
 title: "STAT5703 HW2 Ex3"
 author: "Chao Huang (ch3474), Wancheng Chen (wc2687), Chengchao Jin (cj2628)"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
